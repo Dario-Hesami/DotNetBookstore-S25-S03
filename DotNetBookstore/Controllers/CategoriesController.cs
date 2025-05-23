@@ -24,7 +24,12 @@ namespace DotNetBookstore.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Category = category;           
+            ViewBag.Category = category;
+            return View();
+        }
+        
+        public IActionResult Create()
+        {
             return View();
         }
     }
