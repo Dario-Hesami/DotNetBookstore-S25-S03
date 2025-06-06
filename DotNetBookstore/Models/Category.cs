@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace DotNetBookstore.Models
 {
@@ -24,7 +25,7 @@ namespace DotNetBookstore.Models
 
 
         // Navigation property: A category can have many books (optional from the category side)
-
+        [ValidateNever]
         public ICollection<Book> Books { get; set; } = [];
 
     }
