@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace DotNetBookstore.Models
 {
@@ -106,7 +107,7 @@ namespace DotNetBookstore.Models
 
 
         // Navigation property: Order can have many details (optional from the order side)
-
+        [ValidateNever]
         public ICollection<OrderDetail> OrderDetails { get; set; } = [];
 
     }
