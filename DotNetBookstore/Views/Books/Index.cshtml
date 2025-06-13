@@ -23,7 +23,7 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                @* @Html.DisplayNameFor(model => model.Image) *@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
@@ -47,7 +47,15 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                @* Display the book cover image or a placholder if not available *@
+                @if (item.Image != null)
+                {
+                    <img src="@Url.Content("~/images/books/" + item.Image)" alt="@item.Title" class="book-image-index" />
+                }
+                else {
+                      <img src="@Url.Content("~/images/books/bookcover-placeholder.jpg")" alt="@item.Title" class="book-image-index" />
+                }
+                @* @Html.DisplayFor(modelItem => item.Image) *@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
