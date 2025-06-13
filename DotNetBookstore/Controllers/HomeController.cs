@@ -20,7 +20,7 @@ namespace DotNetBookstore.Controllers
         public async Task<IActionResult> Index()
         {
             // Hardcoded list of featured books for demonstration purposes
-            var featuredBookIds = new List<int> { 2, 3, 4 }; // Example book IDs
+            var featuredBookIds = new List<int> { 2, 6, 7 }; // Example book IDs
             var featuredBooks = _context.Books
                 .Where(b => featuredBookIds.Contains(b.BookId))
                 .OrderBy(b => b.Author)
