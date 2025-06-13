@@ -1,21 +1,32 @@
-using System.Diagnostics;
+using DotNetBookstore.Data;
 using DotNetBookstore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace DotNetBookstore.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // Hardcoded list of featured books for demonstration purposes
+            var featuredBookIds = new List<int> { 2, 3, 4 }; // Example book IDs
+            var featuredBooks = _context.Books
+                .Where(b => featuredBookIds.Contains(b.BookId))
+                .OrderBy(b => b.Author)
+                .ThenBy(b => b.Title);
+
+            return View(await featuredBooks.ToListAsync());
         }
 
         public IActionResult Privacy()
