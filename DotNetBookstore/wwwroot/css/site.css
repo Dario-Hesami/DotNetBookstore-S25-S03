@@ -1,22 +1,113 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+/* Home/Index.cshtml */
+.hero-section {
+    background: linear-gradient(90deg, #3F51B5 60%, #448aff 100%);
+    color: #fff;
+    padding: 4rem 0 3rem 0;
+    text-align: center;
+    border-radius: 0 0 2rem 2rem;
+    margin-bottom: 2rem;
+}
+
+.featured-books .card-img-top {
+    height: 250px;
+    object-fit: cover;
+}
+
+.featured-books .card {
+    transition: transform 0.2s;
+}
+
+    .featured-books .card:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+/* Home/Index.cshtml */
+
+/* header and footer */
+.main-header {
+    background-color: #3F51B5;
+    color: #fff;
+}
+
+.main-header-nav {
+    background-color: transparent !important;
+}
+
+.main-header .navbar-brand,
+.main-header .nav-link,
+.main-header .navbar-toggler {
+    color: #fff !important;
+}
+
+    .main-header .nav-link.active,
+    .main-header .nav-link:focus,
+    .main-header .nav-link:hover {
+        color: #C5CAE9 !important;
+    }
+
+.main-footer {
+    background-color: #C5CAE9;
+    color: #222;
+    padding: 1rem 0;
+}
+
+    .main-footer a {
+        color: #3F51B5;
+    }
+
+        .main-footer a:hover {
+            color: #303f9f;
+            text-decoration: underline;
+        }
+
+/* Book image */
+.book-image-index {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 0.3rem;
+}
+
+.book-image-edit {
+    max-width: 200px;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 0.3rem;
+}
+
+/* Featured Book  */
+.featured-books .card-img-top {
+    height: 250px;
+    width: 100%;
+    /* Show the whole image, keep aspect ratio */
+    object-fit: contain;
+    /* Optional: light background for empty space */
+    background: #f5f5f5;
+    /* Optional: add some padding around the image */
+    padding: 10px;
+    /* Optional: rounded top corners */
+    border-radius: 0.5rem 0.5rem 0 0;
 }
