@@ -160,5 +160,20 @@ namespace DotNetBookstore.Controllers
         {
             return _context.Books.Any(e => e.BookId == id);
         }
+
+        private static string UploadImage(IFormFile image)
+        {
+            // Use globally unique indentifier (GUID) to create a unique file name
+            // e.g., "b1f8c3e2-8d5a-4b8e-9f7e-3c5f4d6e7a8b-art.jpg"
+            var fileName = Guid.NewGuid().ToString() + "-" + image.FileName;
+            // Set distination path dynamically so it runs on any systems
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/images/books", fileName);
+            using (var fileStream = new FileStream(uploadPath, FileMode.Create))
+            {
+                image.CopyTo(fileStream);
+            }
+            // Return new file name to be stored in the database
+            return fileName;
+        }
     }
 }
