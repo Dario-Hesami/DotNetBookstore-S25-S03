@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="BookId" />
             <div class="form-group">
@@ -25,9 +25,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
+                <input asp-for="Image" class="form-control" type="file" accept="images/*"/>
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
+            @* Display the book cover image *@
+            @if (Model.Image != null)
+            {
+                <div class="form-group">
+                    <img src="@Url.Content("~/images/books/" + Model.Image)" alt="@Model.Title" class="book-image-index" />
+                </div>
+            }
+
+            @* Hidden field to store the current image name *@
+            <input type="hidden" name="CurrentImage" id="CurrentImage" value="@Model.Image" />
+
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
