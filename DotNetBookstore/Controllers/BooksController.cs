@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DotNetBookstore.Data;
+using DotNetBookstore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DotNetBookstore.Data;
-using DotNetBookstore.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotNetBookstore.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,6 +29,8 @@ namespace DotNetBookstore.Controllers
         }
 
         // GET: Books/Details/5
+        [AllowAnonymous]
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,7 +61,7 @@ namespace DotNetBookstore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookId,Author,Title,Price,MatureContent,CategoryId")] Book book, IFormFile image)
+        public async Task<IActionResult> Create([Bind("BookId,Author,Title,Price,MatureContent,CategoryId")] Book book, IFormFile? image)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +107,7 @@ namespace DotNetBookstore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookId,Author,Title,Image,Price,MatureContent,CategoryId")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("BookId,Author,Title,Price,MatureContent,CategoryId")] Book book, IFormFile? image, string? CurrentImage)
         {
             if (id != book.BookId)
             {
@@ -114,6 +118,19 @@ namespace DotNetBookstore.Controllers
             {
                 try
                 {
+                    // If an image is uploaded, process it and set the Image property
+                    if (image != null)
+                    {
+                        book.Image = UploadImage(image);
+                    }
+                    else
+                    {
+                        // If no image is uploaded, keep the current image - if this book already has an image
+                        if (CurrentImage != null)
+                        {
+                            book.Image = CurrentImage;
+                        }
+                    }
                     _context.Update(book);
                     await _context.SaveChangesAsync();
                 }
