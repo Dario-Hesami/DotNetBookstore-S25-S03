@@ -111,3 +111,9 @@ body {
     /* Optional: rounded top corners */
     border-radius: 0.5rem 0.5rem 0 0;
 }
+
+/* Styles for the Shop/Index.cshtml page */
+.card-body > a {
+    -webkit-text-decoration: none;
+    text-decoration: none;
+}
