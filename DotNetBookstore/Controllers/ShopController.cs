@@ -24,5 +24,27 @@ namespace DotNetBookstore.Controllers
                 .ToList();
             return View(categories);
         }
+
+        //  Get: /Shop/ShopByCategory/5
+        public IActionResult ShopByCategory(int id)
+        {
+            // Display the category name on the page based on the ID - store category name in the ViewBag object
+            var category = _context.Categories.Find(id);
+
+            // return to /shop/index if category not found
+            if (category == null)
+            {
+                return RedirectToAction("Index");
+            }
+            ViewBag.Category = category.Name;
+
+            // query the books filtered by the selected CategoryId parameter
+            var books = _context.Books.Where(b => b.CategoryId == id)
+                .OrderBy(b => b.Title)
+                .ToList();
+
+            // send the books to the view for display   
+            return View(books);
+        }
     }
 }
