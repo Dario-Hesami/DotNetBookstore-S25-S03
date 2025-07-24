@@ -98,6 +98,7 @@ html, body {
     border-radius: 0.3rem;
 }
 
+
 /* Styles for the Shop/Index.cshtml and ShopByCategory.cshtml pages */
 .card-body > a {
     -webkit-text-decoration: none;

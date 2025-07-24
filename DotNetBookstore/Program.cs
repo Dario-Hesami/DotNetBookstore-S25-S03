@@ -14,6 +14,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
 // enable session state in the application 
 // This is used to store user session data, such as shopping cart items
 builder.Services.AddMemoryCache();
