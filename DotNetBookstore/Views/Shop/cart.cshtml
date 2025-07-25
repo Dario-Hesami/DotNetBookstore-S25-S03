@@ -4,52 +4,77 @@
     ViewData["Title"] = "Cart";
 }
 
-@* This view displays the cart items for the user. *@
-<h1>Cart</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Book.Author)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.CartItemId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.CartItemId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CartItemId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container my-5">
+    <h1 class="mb-4 text-center"><i class="bi bi-cart4"></i> Cart</h1>
+    @* if (Model.Count == 0) *@
+    @if (!Model.Any())
+    {
+        <div class="card shadow-sm p-4 text-center mt-5">
+            <h4 class="mb-3 text-secondary"><i class="bi bi-emoji-frown"></i> Your cart is empty.</h4>
+            <a asp-action="Index" class="btn btn-lg btn-success"><i class="bi bi-bag-plus"></i> Start Shopping</a>
+        </div>
+    }
+    else
+    {
+        decimal total = 0;
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <table class="table table-striped table-hover align-middle border rounded">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Book)</th>
+                            <th></th>
+                            <th>@Html.DisplayNameFor(model => model.Price)</th>
+                            <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            total += (item.Price * item.Quantity);
+                            <tr>
+                                <td style="min-width:180px">
+                                    <a asp-controller="Books" asp-action="Details" asp-route-id="@item.BookId" class="fw-semibold text-decoration-none text-dark">
+                                        @Html.DisplayFor(modelItem => item.Book.Title)
+                                    </a>
+                                </td>
+                                <td style="width:110px">
+                                    @if (item.Book.Image != null)
+                                    {
+                                        <img src="~/images/books/@item.Book.Image" alt="Book Cover" class="img-fluid img-thumbnail cart-images" style="max-width:80px; max-height:100px; object-fit:cover;" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/books/bookcover-placeholder.jpg" alt="Book Cover" class="img-fluid img-thumbnail cart-images" style="max-width:80px; max-height:100px; object-fit:cover;" />
+                                    }
+                                </td>
+                                <td class="text-success fw-bold">@String.Format("{0:C}", item.Price)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                <td>
+                                    <a asp-action="RemoveFromCart" asp-route-id="@item.CartItemId" class="btn btn-outline-danger btn-sm" onclick="return confirmDelete();">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        <tr class="table-info">
+                            <td colspan="2"></td>
+                            <td colspan="1">
+                                <strong><span class="text-primary">Total: </span>@String.Format("{0:c}", total)</strong>
+                            </td>
+                            <td colspan="2" class="text-end">
+                                <a class="btn btn-outline-secondary me-2" asp-action="Index">
+                                    <i class="bi bi-arrow-left"></i> Continue Shopping
+                                </a>
+                                <a class="btn btn-primary" asp-action="Checkout">
+                                    <i class="bi bi-credit-card"></i> Checkout
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

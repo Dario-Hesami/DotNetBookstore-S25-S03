@@ -10,6 +10,7 @@
 <h1 class="text-center bg-light text-dark py-3 rounded shadow-sm mb-4">You are shopping for: <span class="text-primary">@ViewBag.Category</span></h1>
 
 @* Display a message if no books are found in the selected category *@
+@* if (Model.Count == 0) *@
 @if (!Model.Any())
 {
     <div class="alert alert-warning w-100 text-center">No books found in this category.</div>

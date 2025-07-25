@@ -128,3 +128,10 @@ html, body {
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
     background: #f0f8ff;
 }
+
+/* add some custom CSS for cart-images */
+.cart-images {
+    max-width: 80px;
+    max-height: 100px;
+    object-fit: cover;
+}
